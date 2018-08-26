@@ -1,2 +1,0 @@
-# SonopApp
-For Sonop.
