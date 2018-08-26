@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Announcements</ion-title>
+    </ion-navbar>
+</ion-header>
+    
+<ion-content padding>
+    <ion-list>
+        <ion-card class="announcement card" *ngFor="let announcement of announcements" color="primary">
+        <ion-card-header>  
+            <ion-item color="primary">
+            <ion-label item-start><h1>{{announcement.title}}</h1></ion-label>
+            </ion-item>              
+        </ion-card-header>
+        <ion-card-content>   
+            <ion-item color="primary">          
+            <p>{{announcement.date}}</p>                      
+            <p>{{announcement.message}}</p>                      
+            </ion-item>             
+        </ion-card-content>
+        </ion-card>
+    </ion-list>
+
+    <div padding>
+
+    </div>
+
+
+    </ion-content>
+      
