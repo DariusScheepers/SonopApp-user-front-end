@@ -4,6 +4,7 @@ import { FormGroup, FormControl} from '@angular/forms';
 //import { HomePage } from '../home/home';
 import { Http } from '../../http-api';
 import { AnnouncementsPage } from '../announcements/announcements';
+import { RegisterPage } from '../register/register';
 
 @Component({
   selector: 'page-login',
@@ -49,6 +50,12 @@ export class LoginPage {
         alert("Error: " + error);         
       }
     );
+  }
+
+  public openRegister()
+  {
+    alert("open reg page");
+    this.navCtrl.push(RegisterPage);
   }
 
   private testCon() {
