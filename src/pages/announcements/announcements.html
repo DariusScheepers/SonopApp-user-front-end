@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar>
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
+        <button ion-button menuToggle right>
+            <ion-icon name="menu" side="right"></ion-icon>
         </button>
         <ion-title>Announcements</ion-title>
     </ion-navbar>
@@ -12,13 +12,16 @@
         <ion-card class="announcement card" *ngFor="let announcement of announcements" color="primary">
         <ion-card-header>  
             <ion-item color="primary">
-            <ion-label item-start><h1>{{announcement.title}}</h1></ion-label>
+                <ion-label item-start><h1>{{announcement.title}}</h1></ion-label>
             </ion-item>              
         </ion-card-header>
         <ion-card-content>   
             <ion-item color="primary">          
-            <p>{{announcement.date}}</p>                      
-            <p>{{announcement.message}}</p>                      
+                <p>{{announcement.date}}</p> 
+                <p>{{announcement.postedBy}}</p>  
+            </ion-item>
+            <ion-item>
+                    <div [innerHTML]="announcement.message"></div>                     
             </ion-item>             
         </ion-card-content>
         </ion-card>
