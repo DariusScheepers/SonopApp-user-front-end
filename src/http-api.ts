@@ -6,8 +6,14 @@ import { Headers, Http as AngularHttp } from '@angular/http';
 export class Http {
   constructor(private http: AngularHttp) {}
 
-  get(path: string) {
-    return this.http.get(CONFIG.url + path); // , {withCredentials: true}
+  get(path: string, otherUrl: boolean = false) {
+    if (!otherUrl)
+      return this.http.get(CONFIG.url + path); // , {withCredentials: true}
+    else
+    {
+      alert("p: " + path);
+      return this.http.get(path, {withCredentials: true});
+    } 
   }
 
   post(path: string, data: any) {

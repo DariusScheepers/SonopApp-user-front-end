@@ -38,7 +38,7 @@ export class LoginPage {
         if(jsonResp.success)
         {
           this.presentToast("Logged in!");
-          this.navCtrl.push(AnnouncementsPage);
+          this.navCtrl.setRoot(AnnouncementsPage);
         }
         else
         {

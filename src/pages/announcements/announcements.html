@@ -1,13 +1,14 @@
 <ion-header>
     <ion-navbar>
-        <button ion-button menuToggle="right">
-            <ion-icon name="menu" side="right"></ion-icon>
+        <button ion-button menuToggle right>
+            <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Announcements</ion-title>
     </ion-navbar>
 </ion-header>
     
 <ion-content padding>
+    <script src="http://www.ourmanna.com/verses/api/js/" type="text/javascript"></script>
     <ion-list>
         <ion-card class="announcement card" *ngFor="let announcement of announcements" color="primary">
         <ion-card-header>  
