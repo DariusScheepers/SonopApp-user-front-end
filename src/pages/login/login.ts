@@ -5,6 +5,7 @@ import { FormGroup, FormControl} from '@angular/forms';
 import { Http } from '../../http-api';
 import { AnnouncementsPage } from '../announcements/announcements';
 import { RegisterPage } from '../register/register';
+import { GlobalProvider } from "../../providers/global/global";
 
 @Component({
   selector: 'page-login',
@@ -13,7 +14,7 @@ import { RegisterPage } from '../register/register';
 export class LoginPage {
 
   adminUser: any;
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public http: Http) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public http: Http, public global: GlobalProvider) {
     this.adminUser = new FormGroup({user: new FormControl(), pass: new FormControl()});
   }
 
@@ -26,32 +27,40 @@ export class LoginPage {
     jsonArr.username = value.user;
     jsonArr.password = value.pass;
 
-    this.http.post("/login", jsonArr).subscribe
-    (
-      (data) =>
-      {      
-        var jsonResp = JSON.parse(data.text());
-        if(jsonResp.success)
+	this.http.post("/login", jsonArr).subscribe
+	(
+		(data) =>
+		{      
+			var jsonResp = JSON.parse(data.text());
+			if (jsonResp.JSONRes.success)
+			{
+        if (jsonResp.JSONRes.verified)
         {
           this.presentToast("Logged in!");
+          this.global.myUsrID = jsonResp.JSONRes.usrID;
+          this.global.mySurname = jsonResp.JSONRes.surname;
+          this.global.isHK = true;
+          
           this.navCtrl.setRoot(AnnouncementsPage);
         }
         else
-        {
-          alert("Invalid Login. Try Again.");
-        }
-      },
-      (error) =>
-      {
-        alert("Error: " + error);         
-      }
-    );
+          alert("Your account has not yet been verified. Please try again later.");
+			}
+			else
+			{
+				alert("Invalid Login. Try Again.");
+			}
+		},
+		(error) =>
+		{
+			alert("Error: " + error);         
+		}
+	);
   }
 
   public openRegister()
   {
-    alert("open reg page");
-    this.navCtrl.push(RegisterPage);
+	  this.navCtrl.push(RegisterPage);
   }
 
   presentToast(text){

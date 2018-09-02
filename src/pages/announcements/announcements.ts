@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { Http } from '../../http-api';
 import { HTTP } from '@ionic-native/http';
+import { GlobalProvider } from "../../providers/global/global";
+import { FormGroup, FormControl } from '@angular/forms';
 //import { HTTP, HTTPResponse } from '@ionic-native/http';
 
 @Component({
@@ -16,9 +18,16 @@ export class AnnouncementsPage {
     votd:any;
     votdRef:any;
 
-    constructor(public navCtrl: NavController, public http: Http, public HTTP: HTTP) {
-        this.updateAnnouncements();
+    newAnn:any;
+
+    constructor(public navCtrl: NavController, public toastCtrl: ToastController, public http: Http, public HTTP: HTTP, public global: GlobalProvider) {
+        this.newAnn = new FormGroup({
+            title: new FormControl(),
+            message: new FormControl()
+        });
+        
         this.getBibleVerseOfTheDay();
+        this.updateAnnouncements();
     }
 
     public getBibleVerseOfTheDay()
@@ -30,7 +39,6 @@ export class AnnouncementsPage {
         (
             (data) =>
             {
-
                 var jsonResp = JSON.parse(data.text());
                 this.votd = jsonResp.verse.details;
                 this.votdRef = jsonResp.verse.notice;
@@ -54,6 +62,13 @@ export class AnnouncementsPage {
                 this.announcements = jsonResp.announcements;
                 this.announcements.forEach(element => {
                     element.message = element.message .replace(/\n/g, '<br>');
+                    let date = new Date(element.date);
+                    let dateString = date.getMinutes() + ":" +
+                        date.getHours() + " " + 
+                        date.getDate() + "/" +
+                        date.getMonth() + "/" +
+                        date.getFullYear();
+                    element.date = dateString;
                 });
             },
             (error) =>
@@ -61,6 +76,46 @@ export class AnnouncementsPage {
                 alert("Error: " + error);
             }
         )
+    }
+
+    public addAnnouncement(value: any)
+    {
+        if (value.title == null && value.message == null)
+        {
+            alert("Please complete form first");
+            return;
+        }
+
+        let jsonArr = {
+            title : value.title,
+            message : value.message,
+            id : this.global.myUsrID
+        };
+        this.http.post('/addAnnouncement', jsonArr).subscribe
+        (
+            (data) => 
+            {
+                this.presentToast("Successfully Submitted");
+                this.updateAnnouncements();
+                this.newAnn.reset();
+            },
+            (error) =>
+            {
+                alert("Error" + error);
+            }
+        );
+    }
+
+    presentToast(text)
+    {
+        let toast = this.toastCtrl.create(
+        {
+            message: text,
+            duration: 1500,
+            position: 'bottom',
+            dismissOnPageChange: false
+        });
+        toast.present();
     }
 
 }

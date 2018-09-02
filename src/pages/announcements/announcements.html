@@ -8,13 +8,37 @@
 </ion-header>
     
 <ion-content padding>
+
+    <h1>Welcome Meneer {{global.mySurname}}</h1>
     <ion-card>
+        <ion-card-header>
+        </ion-card-header>
         <ion-card-content text-wrap>
-            <p>{{votd.text}}</p>
-            <ion-label>- {{votd.reference}}</ion-label>
-            <ion-label>{{votdRef}}</ion-label>
+            <ion-item>
+                <img item-start class="cardImage" src="../../assets/imgs/Garri Baldi.png" />
+                <p><i>{{votd.text}}</i>
+                    <br />- {{votd.reference}}
+                    <br />
+                    {{votdRef}}
+                </p>                
+            </ion-item>
         </ion-card-content>
     </ion-card>
+
+    <form *ngIf="global.isHK" (submit)="addAnnouncement(newAnn.value)" [formGroup]="newAnn">
+        <ion-item>
+            <h2>Post New Announcement</h2>
+        </ion-item>
+        <ion-item> 
+            <ion-label floating>Enter Title...</ion-label>
+            <ion-input formControlName="title" type="text"></ion-input>        
+        </ion-item>
+        <ion-item> 
+            <ion-label floating>Enter text...</ion-label>
+            <ion-textarea formControlName="message" type="text"></ion-textarea>        
+        </ion-item>
+        <button ion-button outline round type="submit" block>submit</button>
+    </form>
 
     <ion-list>
         <ion-card class="announcement card" *ngFor="let announcement of announcements" color="primary">

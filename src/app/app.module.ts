@@ -11,9 +11,11 @@ import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { AnnouncementsPage } from '../pages/announcements/announcements';
+import { WeekendPage } from '../pages/weekend/weekend';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { GlobalProvider } from '../providers/global/global';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ListPage,
     LoginPage,
     AnnouncementsPage,
-    RegisterPage
+    RegisterPage,
+    WeekendPage
   ],
   imports: [
     BrowserModule,
@@ -36,14 +39,16 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ListPage,
     LoginPage,
     AnnouncementsPage,
-    RegisterPage
+    RegisterPage,
+    WeekendPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Http,
-    HTTP
+    HTTP,
+    GlobalProvider
   ]
 })
 export class AppModule {}

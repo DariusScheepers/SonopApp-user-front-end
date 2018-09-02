@@ -11,6 +11,8 @@ import { LoginPage } from '../login/login'
 export class RegisterPage {
     regUser:any;
 
+    HKMode:boolean = false;
+
     constructor(public http: Http, public navCtrl: NavController, public toastCtrl: ToastController)
     {
         this.regUser = new FormGroup({
@@ -19,20 +21,20 @@ export class RegisterPage {
             email: new FormControl(),
             username: new FormControl(),
             password: new FormControl(),
-            confirmpassword: new FormControl()
+            confirmpassword: new FormControl(),
+            porfolios: new FormControl()
         });
     }
 
     public registerUser(value: any)
     {
         var regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        alert("p: " + value.password + " cp: " + value.confirmpassword);
         if (value.fname == null || value.sname == null || value.username == null || value.email == null || value.password == null || value.confirmpassword == null)
             this.presentToast("Please fill in all fields");
-        else if(!regexEmail.test(value.email)) {
+        else if (!regexEmail.test(value.email)) {
             this.presentToast("Please enter a valid email address");
         }
-        else if(value.password === value.confirmPassword && value.password != value.confirmPassword)
+        else if (value.password === value.confirmPassword && value.password != value.confirmPassword)
         {
             this.presentToast("Please ensure that your passwords match");
         }
@@ -44,6 +46,7 @@ export class RegisterPage {
             jsonArr.email = value.email;
             jsonArr.name = value.fname;
             jsonArr.surname = value.sname;
+            jsonArr.portfolios = value.porfolios;
             this.http.post("/addUser", jsonArr).subscribe
             (
                 (response) => 
@@ -51,9 +54,8 @@ export class RegisterPage {
                     var jsonResp = JSON.parse(response.text());
                     if(jsonResp.success)
                     {
-                        console.log(response);
-                        this.presentToast("Registration successful! Please log in.");
-                        this.navCtrl.push(LoginPage);
+                        this.navCtrl.setRoot(LoginPage);
+                        this.presentToast("Registration successful! Please log in.");                        
                     }
                     else
                     {
@@ -62,8 +64,7 @@ export class RegisterPage {
                 },
                 (error) =>
                 {
-                    alert("Error" +error);
-                    console.log("Error");
+                    alert("Error" + error);
                 }   
             );
         }

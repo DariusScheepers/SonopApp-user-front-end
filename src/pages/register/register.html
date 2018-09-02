@@ -31,6 +31,17 @@
                 <ion-label floating>Confirm Password<span style="color:red">*</span></ion-label>
                 <ion-input formControlName="confirmpassword" type="password"></ion-input>        
             </ion-item>
+            <ion-item>
+                <ion-label>HK Mode</ion-label>
+                <ion-checkbox (ionChange)="HKMode = !HKMode">HKMode</ion-checkbox>
+            </ion-item>
+            
+            <div *ngIf="HKMode">
+                <ion-item>
+                    <ion-label floating>Portfolios<span style="color:red">*</span></ion-label>
+                    <ion-input formControlName="porfolios" type="text"></ion-input>
+                </ion-item>
+            </div>
         </ion-list>
         <button ion-button outline round type="submit" block>Register</button>
     </form>
