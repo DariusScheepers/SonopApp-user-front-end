@@ -11,8 +11,8 @@ export class Http {
       return this.http.get(CONFIG.url + path); // , {withCredentials: true}
     else
     {
-      alert("p: " + path);
-      return this.http.get(path, {withCredentials: true});
+      //alert("p: " + path);
+      return this.http.get(path);
     } 
   }
 

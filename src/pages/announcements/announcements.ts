@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Http } from '../../http-api';
+import { HTTP } from '@ionic-native/http';
 //import { HTTP, HTTPResponse } from '@ionic-native/http';
 
 @Component({
@@ -13,38 +14,32 @@ export class AnnouncementsPage {
     announcement:any;
 
     votd:any;
+    votdRef:any;
 
-    constructor(public navCtrl: NavController, public http: Http) {
+    constructor(public navCtrl: NavController, public http: Http, public HTTP: HTTP) {
         this.updateAnnouncements();
         this.getBibleVerseOfTheDay();
     }
 
     public getBibleVerseOfTheDay()
     {
-        /*this.httpPlugin.setHeader("content-type", "application/json","");
-
-        this.httpPlugin.get('https://www.ourmanna.com/verses/api/v1/', {}, {}).then((response) => {
-            alert(response.data);
-        }).catch(error => {
-
-        });*/
-
-
-        /*
+        var pref = 'http://cors-anywhere.herokuapp.com/';   
+        var bv = pref + 'http://beta.ourmanna.com/api/v1/get/?format=json';
         this.votd = {};
-        this.http.get("https://www.ourmanna.com/verses/api/v1/", true).subscribe
+        this.http.get(bv, true).subscribe
         (
-            (data)=>
+            (data) =>
             {
+
                 var jsonResp = JSON.parse(data.text());
-                alert("votdT: " + data.text());
-                alert("votd: " + jsonResp);
+                this.votd = jsonResp.verse.details;
+                this.votdRef = jsonResp.verse.notice;
             },
             (error) =>
             {
                 alert("Error: " + error);
             }
-        );*/
+        ); 
     }
 
     public updateAnnouncements()

@@ -19,10 +19,6 @@ export class LoginPage {
 
   public loginAdmin(value: any)
   {
-
-    //this.testCon();
-    //alert("sending login request...");
-
     var jsonArr = {
       "username" : "",
       "password" : ""
@@ -57,49 +53,6 @@ export class LoginPage {
     alert("open reg page");
     this.navCtrl.push(RegisterPage);
   }
-
-  private testCon() {
-      this.http.get("/testing").subscribe
-      (
-        (data) =>
-        {
-          alert("successful connection...");
-          console.log("success in console");
-
-          var jsonResp = JSON.parse(data.text());
-          if(jsonResp.success)
-          {
-          }
-          else
-          {
-            alert("Invalid Login. Try Again.");
-          }
-        },
-        (error) =>
-        {
-          alert("Error: " + error);    
-        }
-
-      );
-
-      //this.testCon2();
-  }
-
-  private testCon2() {
-    this.http.get("/getsomething_template/" + 1).subscribe
-    (
-      (data) =>
-      {
-        alert(data);
-        console.log("success in console for t2");
-      },
-      (error) =>
-      {
-        alert("Error in t2: " + error);    
-      }
-
-    );
-}
 
   presentToast(text){
     let toast = this.toastCtrl.create(
