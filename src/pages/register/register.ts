@@ -20,6 +20,9 @@ export class RegisterPage {
             sname: new FormControl(),
             email: new FormControl(),
             username: new FormControl(),
+            studentnumber: new FormControl(),
+            firstyearyear: new FormControl(),
+            bedieningtable: new FormControl(),
             password: new FormControl(),
             confirmpassword: new FormControl(),
             porfolios: new FormControl()
@@ -38,6 +41,10 @@ export class RegisterPage {
         {
             this.presentToast("Please ensure that your passwords match");
         }
+        else if (value.studentnumber.length > 10)
+        {
+            this.presentToast("Student number too long");
+        }
         else
         {
             var jsonArr: any = {};
@@ -46,6 +53,9 @@ export class RegisterPage {
             jsonArr.email = value.email;
             jsonArr.name = value.fname;
             jsonArr.surname = value.sname;
+            jsonArr.studentnumber = value.studentnumber;
+            jsonArr.firstyearyear = value.firstyearyear;
+            jsonArr.bedieningtable = value.bedieningtable;
             jsonArr.portfolios = value.porfolios;
             this.http.post("/addUser", jsonArr).subscribe
             (
