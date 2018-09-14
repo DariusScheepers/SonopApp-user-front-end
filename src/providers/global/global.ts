@@ -10,12 +10,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class GlobalProvider {
 
-  public myUsrID: number = 0;
-  public mySurname: string = "";
-  public isHK:boolean = false;
-  constructor() {
-  }
-
-  
-
+	public myUsrID: number = 0;
+	public mySurname: string = "";
+	public isHK:boolean = false;
+	constructor() {
+		
+	}
 }

@@ -39,7 +39,7 @@ export class LoginPage {
           this.presentToast("Logged in!");
           this.global.myUsrID = jsonResp.JSONRes.usrID;
           this.global.mySurname = jsonResp.JSONRes.surname;
-          this.global.isHK = true;
+          this.global.isHK = jsonResp.JSONRes.isHK;
           
           this.navCtrl.setRoot(AnnouncementsPage);
         }

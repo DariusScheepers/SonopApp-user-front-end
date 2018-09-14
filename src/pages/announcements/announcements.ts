@@ -4,6 +4,7 @@ import { Http } from '../../http-api';
 import { HTTP } from '@ionic-native/http';
 import { GlobalProvider } from "../../providers/global/global";
 import { FormGroup, FormControl } from '@angular/forms';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 //import { HTTP, HTTPResponse } from '@ionic-native/http';
 
 @Component({
@@ -20,28 +21,29 @@ export class AnnouncementsPage {
 
     newAnn:any;
 
-    constructor(public navCtrl: NavController, public toastCtrl: ToastController, public http: Http, public HTTP: HTTP, public global: GlobalProvider) {
+    constructor(public navCtrl: NavController, public toastCtrl: ToastController, public http: Http, public HTTP: HTTP, public global: GlobalProvider, private localNotifications: LocalNotifications) {
         this.newAnn = new FormGroup({
             title: new FormControl(),
             message: new FormControl()
         });
-        
         this.getBibleVerseOfTheDay();
         this.updateAnnouncements();
+        //this.scheduleANotification();
+        //this.testNotf();
     }
 
     public getBibleVerseOfTheDay()
     {
-        var pref = 'http://cors-anywhere.herokuapp.com/';   
-        var bv = pref + 'http://beta.ourmanna.com/api/v1/get/?format=json';
+        
         this.votd = {};
-        this.http.get(bv, true).subscribe
+        this.http.get('/bibleVerse').subscribe
         (
             (data) =>
             {
                 var jsonResp = JSON.parse(data.text());
-                this.votd = jsonResp.verse.details;
-                this.votdRef = jsonResp.verse.notice;
+                alert("bv: " + jsonResp.bibleVerseJSON.verse);
+                this.votd = jsonResp.bibleVerseJSON.verse.details;
+                this.votdRef = jsonResp.bibleVerseJSON.verse.notice;
             },
             (error) =>
             {
@@ -54,7 +56,7 @@ export class AnnouncementsPage {
     {
         this.announcements = [];
         this.announcement = {};
-        this.http.get('/announcements').subscribe
+        this.http.get('/get-announcements').subscribe
         (
             (data) =>
             {
@@ -118,4 +120,22 @@ export class AnnouncementsPage {
         toast.present();
     }
 
+    public scheduleANotification ()
+    {
+        this.localNotifications.schedule({
+            title: 'Weekend Sign In',
+            text: "Remember to sign in!",
+            every: {'week':4, 'hour': 17, 'minute': 40}
+        });
+    }
+
+    public testNotf()
+    {
+        this.localNotifications.schedule({
+            title: 'Weekend Sign In',
+            text: "Remember to sign in!",
+            foreground: true//,
+            //every: {'hour': 16, 'minute': 3}
+        });
+    }
 }

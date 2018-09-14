@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { Http } from '../http-api';
 import { HttpModule} from '@angular/http';
 import { HTTP } from '@ionic-native/http';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -48,7 +49,8 @@ import { GlobalProvider } from '../providers/global/global';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Http,
     HTTP,
-    GlobalProvider
+    GlobalProvider,
+    LocalNotifications
   ]
 })
 export class AppModule {}

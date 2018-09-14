@@ -19,7 +19,7 @@ export class WeekendPage {
 		let reqSend = {
 			id: this.global.myUsrID
 		}
-		this.http.post('/weekend', reqSend).subscribe
+		this.http.post('/get-weekend', reqSend).subscribe
 		(
 			(data) =>
 			{
