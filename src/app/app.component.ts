@@ -8,6 +8,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { AnnouncementsPage } from '../pages/announcements/announcements';
 import { WeekendPage } from '../pages/weekend/weekend';
+import { SignOutPage } from '../pages/sign-out/sign-out';
+import { SettingsPage } from '../pages/settings/settings';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,7 +27,9 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Announcements', component: AnnouncementsPage },
-      { title: 'Weekend Sign In', component: WeekendPage }
+      { title: 'Weekend Sign In', component: WeekendPage },
+      { title: 'Weekly Sign Out', component: SignOutPage },
+      { title: 'Settings', component: SettingsPage}
     ];
 
   }

@@ -13,6 +13,8 @@ import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { AnnouncementsPage } from '../pages/announcements/announcements';
 import { WeekendPage } from '../pages/weekend/weekend';
+import { SignOutPage } from '../pages/sign-out/sign-out';
+import { SettingsPage } from '../pages/settings/settings';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -26,7 +28,9 @@ import { GlobalProvider } from '../providers/global/global';
     LoginPage,
     AnnouncementsPage,
     RegisterPage,
-    WeekendPage
+    WeekendPage,
+    SignOutPage,
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,9 @@ import { GlobalProvider } from '../providers/global/global';
     LoginPage,
     AnnouncementsPage,
     RegisterPage,
-    WeekendPage
+    WeekendPage,
+    SignOutPage,
+    SettingsPage
   ],
   providers: [
     StatusBar,

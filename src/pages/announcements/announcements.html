@@ -37,6 +37,10 @@
             <ion-label floating>Enter text...</ion-label>
             <ion-textarea formControlName="message" type="text"></ion-textarea>        
         </ion-item>
+        <ion-item>
+            <ion-label>Priority</ion-label>
+            <ion-checkbox (ionChange)="priorityMessage = !priorityMessage"></ion-checkbox>
+        </ion-item>
         <button ion-button outline round type="submit" block>submit</button>
     </form>
 

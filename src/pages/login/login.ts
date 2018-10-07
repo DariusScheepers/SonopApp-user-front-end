@@ -18,7 +18,7 @@ export class LoginPage {
     this.adminUser = new FormGroup({user: new FormControl(), pass: new FormControl()});
   }
 
-  public loginAdmin(value: any)
+  public login(value: any)
   {
     var jsonArr = {
       "username" : "",

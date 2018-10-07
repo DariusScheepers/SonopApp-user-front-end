@@ -11,7 +11,6 @@ import { LoginPage } from '../login/login'
 export class RegisterPage {
     regUser:any;
 
-    HKMode:boolean = false;
 
     constructor(public http: Http, public navCtrl: NavController, public toastCtrl: ToastController)
     {
@@ -25,7 +24,6 @@ export class RegisterPage {
             bedieningtable: new FormControl(),
             password: new FormControl(),
             confirmpassword: new FormControl(),
-            porfolios: new FormControl()
         });
     }
 
@@ -47,16 +45,23 @@ export class RegisterPage {
         }
         else
         {
-            var jsonArr: any = {};
-            jsonArr.username = value.username;
-            jsonArr.password = value.password;
-            jsonArr.email = value.email;
-            jsonArr.name = value.fname;
-            jsonArr.surname = value.sname;
-            jsonArr.studentnumber = value.studentnumber;
-            jsonArr.firstyearyear = value.firstyearyear;
-            jsonArr.bedieningtable = value.bedieningtable;
-            jsonArr.portfolios = value.porfolios;
+            var HKMode = false;
+            if (value.bedieningtable == 1)
+            {
+                HKMode = true;
+            }
+
+            var jsonArr: any = {
+                username: value.username,
+                password: value.password,
+                email: value.email,
+                name: value.fname,
+                surname: value.sname,
+                studentnumber: value.studentnumber,
+                firstyearyear: value.firstyearyear,
+                bedieningtable: value.bedieningtable,
+                isHk: HKMode
+            };        
             this.http.post("/addUser", jsonArr).subscribe
             (
                 (response) => 

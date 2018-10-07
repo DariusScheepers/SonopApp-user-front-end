@@ -20,6 +20,7 @@ export class AnnouncementsPage {
     votdRef:any;
 
     newAnn:any;
+    priorityMessage:boolean = false;
 
     constructor(public navCtrl: NavController, public toastCtrl: ToastController, public http: Http, public HTTP: HTTP, public global: GlobalProvider, private localNotifications: LocalNotifications) {
         this.newAnn = new FormGroup({
@@ -41,9 +42,14 @@ export class AnnouncementsPage {
             (data) =>
             {
                 var jsonResp = JSON.parse(data.text());
-                alert("bv: " + jsonResp.bibleVerseJSON.verse);
-                this.votd = jsonResp.bibleVerseJSON.verse.details;
-                this.votdRef = jsonResp.bibleVerseJSON.verse.notice;
+                if (!jsonResp.bibleVerseJSON)
+                    alert("Cant retreive Bible Verse of the Day");
+                else
+                {
+                    
+                    this.votd = jsonResp.bibleVerseJSON.verse.details;
+                    this.votdRef = jsonResp.bibleVerseJSON.verse.notice;
+                }    
             },
             (error) =>
             {
@@ -68,7 +74,7 @@ export class AnnouncementsPage {
                     let dateString = date.getMinutes() + ":" +
                         date.getHours() + " " + 
                         date.getDate() + "/" +
-                        date.getMonth() + "/" +
+                        (date.getMonth()+1) + "/" + // For some reason the getMonth returns one value short.
                         date.getFullYear();
                     element.date = dateString;
                 });
@@ -91,7 +97,8 @@ export class AnnouncementsPage {
         let jsonArr = {
             title : value.title,
             message : value.message,
-            id : this.global.myUsrID
+            id : this.global.myUsrID,
+            priority: this.priorityMessage
         };
         this.http.post('/addAnnouncement', jsonArr).subscribe
         (

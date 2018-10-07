@@ -9,9 +9,19 @@ import { Http } from '../../http-api';
 })
 export class WeekendPage {
 
+	weekendSignInOpen:boolean = true;
 	meals:any;
 	constructor(public navCtrl: NavController, public global: GlobalProvider, public http: Http) {
-		this.loadSlotValues();
+		this.checkIfWeekendOpen();
+		if (this.weekendSignInOpen)
+			this.loadSlotValues();
+	}
+
+	public checkIfWeekendOpen()
+	{
+		var today = new Date();
+		if ((today.getDay() == 4 && today.getHours() > 14) || today.getDay() >= 5 || today.getDay() == 0)
+			this.weekendSignInOpen = false;
 	}
 
 	public loadSlotValues()
@@ -20,7 +30,7 @@ export class WeekendPage {
 			id: this.global.myUsrID
 		}
 		this.http.post('/get-weekend', reqSend).subscribe
-		(
+		( // 1 represents signed in
 			(data) =>
 			{
 				var jsonResp = JSON.parse(data.text());
@@ -56,5 +66,4 @@ export class WeekendPage {
 			}
 		)
 	}
-
 }
