@@ -25,25 +25,27 @@
         </ion-card-content>
     </ion-card>
 
-    <form *ngIf="global.isHK" (submit)="addAnnouncement(newAnn.value)" [formGroup]="newAnn">
-        <ion-item>
-            <h2>Post New Announcement!</h2>
-        </ion-item>
-        <ion-item> 
-            <ion-label floating>Enter Title...</ion-label>
-            <ion-input formControlName="title" type="text"></ion-input>        
-        </ion-item>
-        <ion-item> 
-            <ion-label floating>Enter text...</ion-label>
-            <ion-textarea formControlName="message" type="text"></ion-textarea>        
-        </ion-item>
-        <ion-item>
-            <ion-label>Priority</ion-label>
-            <ion-checkbox (ionChange)="priorityMessage = !priorityMessage"></ion-checkbox>
-        </ion-item>
-        <button ion-button outline round type="submit" block>submit</button>
-    </form>
-
+    <ion-card *ngIf="global.isHK" style="border: 3px solid royalblue">
+        <form  (submit)="addAnnouncement(newAnn.value)" [formGroup]="newAnn">
+            <ion-item>
+                <h2>Post New Announcement</h2>
+            </ion-item>
+            <ion-item> 
+                <ion-label floating>Enter Title...</ion-label>
+                <ion-input formControlName="title" type="text"></ion-input>        
+            </ion-item>
+            <ion-item> 
+                <ion-label floating>Enter text...</ion-label>
+                <ion-textarea formControlName="message" type="text"></ion-textarea>        
+            </ion-item>
+            <ion-item>
+                <ion-label>Priority</ion-label>
+                <ion-checkbox (ionChange)="priorityMessage = !priorityMessage"></ion-checkbox>
+            </ion-item>
+            <button ion-button outline round type="submit" block>submit</button>
+        </form>
+    </ion-card>
+    
     <ion-list>
         <ion-card class="announcement card" *ngFor="let announcement of announcements" color="primary">
         <ion-card-header>  
