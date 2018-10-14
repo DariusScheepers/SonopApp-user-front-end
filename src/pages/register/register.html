@@ -9,23 +9,23 @@
         <ion-list>
             <ion-item> 
                 <ion-label floating>Name<span style="color:red">*</span></ion-label>
-                <ion-input formControlName="fname" type="text"></ion-input>        
+                <ion-input formControlName="fname" type="text" maxlength="50"></ion-input>        
             </ion-item>
             <ion-item> 
                 <ion-label floating>Surname<span style="color:red">*</span></ion-label>
-                <ion-input formControlName="sname" type="text"></ion-input>        
+                <ion-input formControlName="sname" type="text" maxlength="50"></ion-input>        
             </ion-item>
             <ion-item> 
                 <ion-label floating>Email<span style="color:red">*</span></ion-label>
-                <ion-input formControlName="email" type="text"></ion-input>        
+                <ion-input formControlName="email" type="text" maxlength="100"></ion-input>        
             </ion-item>
             <ion-item> 
                 <ion-label floating>Username<span style="color:red">*</span></ion-label>
-                <ion-input formControlName="username" type="text"></ion-input>        
+                <ion-input formControlName="username" type="text" maxlength="50"></ion-input>        
             </ion-item>
             <ion-item> 
                 <ion-label floating>Student Number<span style="color:red">*</span></ion-label>
-                <ion-input formControlName="studentnumber" type="text"></ion-input>        
+                <ion-input formControlName="studentnumber" type="text" maxlength="8"></ion-input>        
             </ion-item>
             <ion-item> 
                 <ion-label floating>Year of First year<span style="color:red">*</span></ion-label>
@@ -47,13 +47,17 @@
                     <ion-option value=11>Eerste Jaar</ion-option>
                 </ion-select>        
             </ion-item>
+            <ion-item>
+                <ion-label>Semi</ion-label>
+                <ion-checkbox right formControlName="semi"></ion-checkbox>
+            </ion-item>
             <ion-item> 
                 <ion-label floating>Password<span style="color:red">*</span></ion-label>
-                <ion-input formControlName="password" type="password"></ion-input>        
+                <ion-input formControlName="password" type="password" maxlength="32"></ion-input>        
             </ion-item>
             <ion-item> 
                 <ion-label floating>Confirm Password<span style="color:red">*</span></ion-label>
-                <ion-input formControlName="confirmpassword" type="password"></ion-input>        
+                <ion-input formControlName="confirmpassword" type="password" maxlength="32"></ion-input>        
             </ion-item>
         </ion-list>
         <button ion-button outline round type="submit" block>Register</button>

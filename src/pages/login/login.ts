@@ -44,16 +44,16 @@ export class LoginPage {
           this.navCtrl.setRoot(AnnouncementsPage);
         }
         else
-          alert("Your account has not yet been verified. Please try again later.");
+          this.presentToast("Your account has not yet been verified. Please try again later.");
 			}
 			else
 			{
-				alert("Invalid Login. Try Again.");
+				this.presentToast("Invalid Login. Try Again.");
 			}
 		},
 		(error) =>
 		{
-			alert("Error: " + error);         
+			this.presentToast("Error: " + error);         
 		}
 	);
   }

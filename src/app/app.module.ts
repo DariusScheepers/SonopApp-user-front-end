@@ -12,6 +12,7 @@ import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { AnnouncementsPage } from '../pages/announcements/announcements';
+import { AnnouncementsAddPage } from '../pages/announcements-add/announcements-add';
 import { WeekendPage } from '../pages/weekend/weekend';
 import { SignOutPage } from '../pages/sign-out/sign-out';
 import { SettingsPage } from '../pages/settings/settings';
@@ -27,6 +28,7 @@ import { GlobalProvider } from '../providers/global/global';
     ListPage,
     LoginPage,
     AnnouncementsPage,
+    AnnouncementsAddPage,
     RegisterPage,
     WeekendPage,
     SignOutPage,
@@ -44,6 +46,7 @@ import { GlobalProvider } from '../providers/global/global';
     ListPage,
     LoginPage,
     AnnouncementsPage,
+    AnnouncementsAddPage,
     RegisterPage,
     WeekendPage,
     SignOutPage,

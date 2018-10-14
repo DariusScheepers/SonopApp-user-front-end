@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, ToastController, ModalController } from 'ionic-angular';
 import { Http } from '../../http-api';
-import { HTTP } from '@ionic-native/http';
 import { GlobalProvider } from "../../providers/global/global";
 import { FormGroup, FormControl } from '@angular/forms';
-import { LocalNotifications } from '@ionic-native/local-notifications';
-//import { HTTP, HTTPResponse } from '@ionic-native/http';
+import { AnnouncementsAddPage } from '../announcements-add/announcements-add';
 
 @Component({
   selector: 'page-announcements',
@@ -22,15 +20,14 @@ export class AnnouncementsPage {
     newAnn:any;
     priorityMessage:boolean = false;
 
-    constructor(public navCtrl: NavController, public toastCtrl: ToastController, public http: Http, public HTTP: HTTP, public global: GlobalProvider, private localNotifications: LocalNotifications) {
+    constructor(public navCtrl: NavController, public toastCtrl: ToastController, public http: Http,
+            public global: GlobalProvider, public modalCtrl: ModalController) {
         this.newAnn = new FormGroup({
             title: new FormControl(),
             message: new FormControl()
         });
         this.getBibleVerseOfTheDay();
         this.updateAnnouncements();
-        //this.scheduleANotification();
-        //this.testNotf();
     }
 
     public getBibleVerseOfTheDay()
@@ -62,7 +59,7 @@ export class AnnouncementsPage {
     {
         this.announcements = [];
         this.announcement = {};
-        this.http.get('/get-announcements').subscribe
+        this.http.get('/getAnnouncements').subscribe
         (
             (data) =>
             {
@@ -70,13 +67,9 @@ export class AnnouncementsPage {
                 this.announcements = jsonResp.announcements;
                 this.announcements.forEach(element => {
                     element.message = element.message .replace(/\n/g, '<br>');
+                    
                     let date = new Date(element.date);
-                    let dateString = date.getMinutes() + ":" +
-                        date.getHours() + " " + 
-                        date.getDate() + "/" +
-                        (date.getMonth()+1) + "/" + // For some reason the getMonth returns one value short.
-                        date.getFullYear();
-                    element.date = dateString;
+                    element.date = date.toLocaleString(); //date.toTimeString() + " - " + date.toDateString() + date.toISOString() + 
                 });
             },
             (error) =>
@@ -86,33 +79,32 @@ export class AnnouncementsPage {
         )
     }
 
-    public addAnnouncement(value: any)
+    public addAnnouncement()
     {
-        if (value.title == null && value.message == null)
+        let addModal = this.modalCtrl.create(AnnouncementsAddPage);
+        addModal.onDidDismiss(result => 
         {
-            alert("Please complete form first");
-            return;
-        }
-
-        let jsonArr = {
-            title : value.title,
-            message : value.message,
-            id : this.global.myUsrID,
-            priority: this.priorityMessage
-        };
-        this.http.post('/addAnnouncement', jsonArr).subscribe
-        (
-            (data) => 
-            {
-                this.presentToast("Successfully Submitted");
-                this.updateAnnouncements();
-                this.newAnn.reset();
-            },
-            (error) =>
-            {
-                alert("Error" + error);
+            if (result) {                        
+                this.http.post("/addAnnouncement", result).subscribe
+                (
+                    (data) =>
+                    {
+                        this.presentToast("Successfully Submitted");
+                        this.updateAnnouncements();
+                    },
+                    (error) =>
+                    {
+                        
+                    }
+                );            
             }
-        );
+        });
+        addModal.present();
+    }
+
+    public refresh()
+    {
+        this.updateAnnouncements();
     }
 
     presentToast(text)
@@ -125,24 +117,5 @@ export class AnnouncementsPage {
             dismissOnPageChange: false
         });
         toast.present();
-    }
-
-    public scheduleANotification ()
-    {
-        this.localNotifications.schedule({
-            title: 'Weekend Sign In',
-            text: "Remember to sign in!",
-            every: {'week':4, 'hour': 17, 'minute': 40}
-        });
-    }
-
-    public testNotf()
-    {
-        this.localNotifications.schedule({
-            title: 'Weekend Sign In',
-            text: "Remember to sign in!",
-            foreground: true//,
-            //every: {'hour': 16, 'minute': 3}
-        });
     }
 }

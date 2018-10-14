@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { GlobalProvider } from "../../providers/global/global";
 import { Http } from '../../http-api';
 
@@ -20,7 +20,7 @@ export class SignOutPage {
 			id: this.global.myUsrID
 		}
 		this.http.post('/get-week', reqSend).subscribe
-		( // 1 represents signed in
+		(
 			(data) =>
 			{
 				var jsonResp = JSON.parse(data.text());
