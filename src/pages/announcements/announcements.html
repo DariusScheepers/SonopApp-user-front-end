@@ -45,17 +45,12 @@
                 <p>{{announcement.date}}</p> 
                 <p>{{announcement.postedBy}}</p>  
             </ion-item>
-            <ion-item > <!--style="overflow: inherit; text-overflow: inherit;white-space: normal;"-->
-                <div class="line-break" [innerHTML]="announcement.message"></div> <!--style="overflow-wrap: break-worwd; word-wrap: break-word;"-->
+            <ion-item>
+                <div class="line-break" [innerHTML]="announcement.message"></div>
             </ion-item>             
         </ion-card-content>
         </ion-card>
     </ion-list>
-
-    <div padding>
-
-    </div>
-
-
-    </ion-content>
+    <p>All announcements will be wiped each Sunday at 17:00.</p>
+</ion-content>
       

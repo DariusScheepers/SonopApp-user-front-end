@@ -35,19 +35,23 @@
                 <ion-label>Semi</ion-label>
                 <ion-checkbox right formControlName="semi" [(ngModel)]="semi"></ion-checkbox>
 			</ion-item>
-			<ion-item> 
-                <ion-label floating>Old Password</ion-label>
-                <ion-input formControlName="oldpassword" type="password" maxlength="32"></ion-input>        
-            </ion-item>
-			<ion-item> 
-                <ion-label floating>New Password</ion-label>
-                <ion-input formControlName="newpassword" type="password" maxlength="32"></ion-input>        
-            </ion-item>
-            <ion-item> 
-                <ion-label floating>Confirm Password</ion-label>
-                <ion-input formControlName="confirmpassword" type="password" maxlength="32"></ion-input>        
-            </ion-item>
 		</ion-list>
+		<button *ngIf="!editPasswordMode" ion-button outline round (click)="editPasswordMode = !editPasswordMode">Change Password</button>
+		<button *ngIf="editPasswordMode" ion-button outline round (click)="editPasswordMode = !editPasswordMode">Cancel Changing Password</button>
+		<div *ngIf="editPasswordMode">
+			<ion-item> 
+				<ion-label floating>Old Password</ion-label>
+				<ion-input formControlName="oldpassword" type="password" maxlength="32"></ion-input>        
+			</ion-item>
+			<ion-item> 
+				<ion-label floating>New Password</ion-label>
+				<ion-input formControlName="newpassword" type="password" maxlength="32"></ion-input>        
+			</ion-item>
+			<ion-item> 
+				<ion-label floating>Confirm Password</ion-label>
+				<ion-input formControlName="confirmpassword" type="password" maxlength="32"></ion-input>        
+			</ion-item>
+		</div>
 		<button ion-button outline round type="submit" block>Update</button>
 		
 	</form>

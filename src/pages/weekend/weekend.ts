@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { GlobalProvider } from "../../providers/global/global";
 import { Http } from '../../http-api';
+import { handleError } from '../../app-functions';
 
 @Component({
 	selector: 'page-weekend',
@@ -11,7 +12,7 @@ export class WeekendPage {
 
 	weekendSignInOpen:boolean = true;
 	meals:any;
-	constructor(public navCtrl: NavController, public global: GlobalProvider, public http: Http) {
+	constructor(public navCtrl: NavController, public global: GlobalProvider, public http: Http, public toastCtrl: ToastController) {
 		this.checkIfWeekendOpen();
 		if (this.weekendSignInOpen)
 			this.loadSlotValues();
@@ -20,7 +21,7 @@ export class WeekendPage {
 	public checkIfWeekendOpen()
 	{
 		var today = new Date();
-		if ((today.getDay() == 4 && today.getHours() > 14) || today.getDay() >= 5 || today.getDay() == 0)
+		if ((today.getDay() == 4 && today.getHours() > 15) || today.getDay() >= 5 || today.getDay() == 0)
 			this.weekendSignInOpen = false;
 	}
 
@@ -38,7 +39,7 @@ export class WeekendPage {
 			},
 			(error) =>
 			{
-				alert("Error: " + error);
+				handleError(this.navCtrl, error, this.toastCtrl);
 			}
 		)
 	}
@@ -62,7 +63,7 @@ export class WeekendPage {
 			{},
 			(error) =>
 			{
-				alert("Error: " + error);
+				handleError(this.navCtrl, error, this.toastCtrl);
 			}
 		)
 	}

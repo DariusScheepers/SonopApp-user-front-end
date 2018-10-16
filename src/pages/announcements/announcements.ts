@@ -4,6 +4,7 @@ import { Http } from '../../http-api';
 import { GlobalProvider } from "../../providers/global/global";
 import { FormGroup, FormControl } from '@angular/forms';
 import { AnnouncementsAddPage } from '../announcements-add/announcements-add';
+import { presentToast, handleError } from '../../app-functions';
 
 @Component({
   selector: 'page-announcements',
@@ -40,7 +41,7 @@ export class AnnouncementsPage {
             {
                 var jsonResp = JSON.parse(data.text());
                 if (!jsonResp.bibleVerseJSON)
-                    alert("Cant retreive Bible Verse of the Day");
+                    handleError(this.navCtrl,"Cant retreive Bible Verse of the Day",this.toastCtrl);
                 else
                 {
                     
@@ -74,7 +75,7 @@ export class AnnouncementsPage {
             },
             (error) =>
             {
-                alert("Error: " + error);
+                handleError(this.navCtrl,error,this.toastCtrl);
             }
         )
     }
@@ -89,7 +90,7 @@ export class AnnouncementsPage {
                 (
                     (data) =>
                     {
-                        this.presentToast("Successfully Submitted");
+                        presentToast(this.toastCtrl,"Successfully Submitted");
                         this.updateAnnouncements();
                     },
                     (error) =>
@@ -105,17 +106,5 @@ export class AnnouncementsPage {
     public refresh()
     {
         this.updateAnnouncements();
-    }
-
-    presentToast(text)
-    {
-        let toast = this.toastCtrl.create(
-        {
-            message: text,
-            duration: 1500,
-            position: 'bottom',
-            dismissOnPageChange: false
-        });
-        toast.present();
     }
 }

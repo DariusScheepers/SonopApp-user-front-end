@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
 import { FormGroup, FormControl} from '@angular/forms';
 import { Http } from '../../http-api';
-import { LoginPage } from '../login/login'
+import { LoginPage } from '../login/login';
+import { presentToast, handleError } from '../../app-functions';
 
 @Component({
   selector: 'page-register',
@@ -32,51 +33,51 @@ export class RegisterPage {
         var regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (value.fname == null || value.fname == "")
         {
-            this.presentToast("Please fill in your name.");
+            presentToast(this.toastCtrl,"Please fill in your name.");
             return false;
         }
         else if (value.sname == null || value.sname == "")
         {
-            this.presentToast("Please fill in your surname.");
+            presentToast(this.toastCtrl,"Please fill in your surname.");
             return false;
         }
         else if (!regexEmail.test(value.email)) {
-            this.presentToast("Please enter a valid email address.");
+            presentToast(this.toastCtrl,"Please enter a valid email address.");
             return false;
         }
         else if (value.username == null || value.username == "")
         {
-            this.presentToast("Please fill in your username.");
+            presentToast(this.toastCtrl,"Please fill in your username.");
             return false;
         }
         else if (value.studentnumber == null || value.studentnumber == "")
         {
-            this.presentToast("Please fill in your student number.");
+            presentToast(this.toastCtrl,"Please fill in your student number.");
             return false;
         }
         else if (value.firstyearyear == null || value.firstyearyear < 1916)
         {
-            this.presentToast("Please fill in your first year year.");
+            presentToast(this.toastCtrl,"Please fill in your first year year.");
             return false;
         }
         else if (value.bedieningtable == null || !(value.bedieningtable >= 1 && value.bedieningtable <= 11))
         {
-            this.presentToast("Please select the table you sit at bedienings.");
+            presentToast(this.toastCtrl,"Please select the table you sit at bedienings.");
             return false;
         }
         else if (value.password == null || value.password == "")
         {
-            this.presentToast("Please fill in your password.");
+            presentToast(this.toastCtrl,"Please fill in your password.");
             return false;
         }
         else if (value.confirmpassword == null || value.confirmpassword == "")
         {
-            this.presentToast("Please fill in your confirm password.");
+            presentToast(this.toastCtrl,"Please fill in your confirm password.");
             return false;
         }
         else if (value.password != value.confirmpassword)
         {
-            this.presentToast("Please ensure that your passwords match.");
+            presentToast(this.toastCtrl,"Please ensure that your passwords match.");
             return false;
         }
         else
@@ -109,31 +110,20 @@ export class RegisterPage {
                     if(jsonResp.success)
                     {
                         this.navCtrl.setRoot(LoginPage);
-                        this.presentToast("Registration successful! Please log in.");                        
+                        presentToast(this.toastCtrl,"Registration successful! Please a while for verification then log in.");                        
                     }
                     else
                     {
-                        this.presentToast("Username already exists.");
+                        presentToast(this.toastCtrl,"Username already exists.");
                         return false;
                     }
                 },
                 (error) =>
                 {
-                    alert("Error" + error);
+                    handleError(this.navCtrl,error,this.toastCtrl);
                 }   
             );
         }
     }
 
-    presentToast(text)
-    {
-        let toast = this.toastCtrl.create(
-        {
-            message: text,
-            duration: 1500,
-            position: 'bottom',
-            dismissOnPageChange: false
-        });
-        toast.present();
-    }
 }

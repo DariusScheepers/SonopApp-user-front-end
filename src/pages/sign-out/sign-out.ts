@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { GlobalProvider } from "../../providers/global/global";
 import { Http } from '../../http-api';
+import { handleError } from '../../app-functions';
 
 @Component({
 	selector: 'page-sign-out',
@@ -10,7 +11,7 @@ import { Http } from '../../http-api';
 export class SignOutPage {
 
 	meals:any;
-	constructor(public navCtrl: NavController, public global: GlobalProvider, public http: Http) {
+	constructor(public navCtrl: NavController, public global: GlobalProvider, public http: Http, public toastCtrl: ToastController) {
 		this.loadSlotValues();
 	}
 
@@ -28,7 +29,7 @@ export class SignOutPage {
 			},
 			(error) =>
 			{
-				alert("Error: " + error);
+				handleError(this.navCtrl, error, this.toastCtrl);
 			}
 		)
 	}
@@ -55,7 +56,7 @@ export class SignOutPage {
 			{},
 			(error) =>
 			{
-				alert("Error: " + error);
+				handleError(this.navCtrl, error, this.toastCtrl);
 			}
 		)
 	}

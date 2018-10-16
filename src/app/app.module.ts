@@ -7,8 +7,6 @@ import { HTTP } from '@ionic-native/http';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { AnnouncementsPage } from '../pages/announcements/announcements';
@@ -24,8 +22,6 @@ import { GlobalProvider } from '../providers/global/global';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ListPage,
     LoginPage,
     AnnouncementsPage,
     AnnouncementsAddPage,
@@ -42,8 +38,6 @@ import { GlobalProvider } from '../providers/global/global';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    ListPage,
     LoginPage,
     AnnouncementsPage,
     AnnouncementsAddPage,

@@ -6,6 +6,7 @@ import { Http } from '../../http-api';
 import { AnnouncementsPage } from '../announcements/announcements';
 import { RegisterPage } from '../register/register';
 import { GlobalProvider } from "../../providers/global/global";
+import { presentToast, handleError } from '../../app-functions';
 
 @Component({
   selector: 'page-login',
@@ -36,24 +37,26 @@ export class LoginPage {
 			{
         if (jsonResp.JSONRes.verified)
         {
-          this.presentToast("Logged in!");
+          presentToast(this.toastCtrl,"Logged in!");
           this.global.myUsrID = jsonResp.JSONRes.usrID;
           this.global.mySurname = jsonResp.JSONRes.surname;
           this.global.isHK = jsonResp.JSONRes.isHK;
+          if (jsonResp.JSONRes.isTheBestCoder)
+            this.global.isHK = true;
           
           this.navCtrl.setRoot(AnnouncementsPage);
         }
         else
-          this.presentToast("Your account has not yet been verified. Please try again later.");
+          presentToast(this.toastCtrl,"Your account has not yet been verified. Please try again later.");
 			}
 			else
 			{
-				this.presentToast("Invalid Login. Try Again.");
+				presentToast(this.toastCtrl,"Invalid Login. Try Again.");
 			}
 		},
 		(error) =>
 		{
-			this.presentToast("Error: " + error);         
+			handleError(this.navCtrl,error,this.toastCtrl);         
 		}
 	);
   }
@@ -62,17 +65,4 @@ export class LoginPage {
   {
 	  this.navCtrl.push(RegisterPage);
   }
-
-  presentToast(text){
-    let toast = this.toastCtrl.create(
-      {
-        message: text,
-        duration: 1500,
-        position: 'bottom',
-        dismissOnPageChange: false
-      }
-    );
-    toast.present();
-  }
-
 }

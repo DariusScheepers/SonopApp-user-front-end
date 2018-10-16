@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, ViewController, T
 import { FormGroup, FormControl } from '@angular/forms';
 import { Http } from '../../http-api';
 import { GlobalProvider } from "../../providers/global/global";
+import { presentToast } from '../../app-functions';
 
 @IonicPage()
 @Component({
@@ -30,12 +31,12 @@ export class AnnouncementsAddPage {
     {
 		if (value.title == null || value.title == "")
         {
-            this.presentToast("Please fill in title.");
+            presentToast(this.toastCtrl,"Please fill in title.");
             return false;
 		}
 		if (value.message == null || value.message == "")
         {
-            this.presentToast("Please fill in message.");
+            presentToast(this.toastCtrl,"Please fill in message.");
             return false;
         }
 
@@ -50,17 +51,4 @@ export class AnnouncementsAddPage {
         this.viewCtrl.dismiss(jsonArr);
 
 	}
-
-	presentToast(text)
-    {
-        let toast = this.toastCtrl.create(
-        {
-            message: text,
-            duration: 1500,
-            position: 'bottom',
-            dismissOnPageChange: false
-        });
-        toast.present();
-    }
-
 }

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { GlobalProvider } from "../../providers/global/global";
 import { Http } from '../../http-api';
 import { FormGroup, FormControl } from '@angular/forms';
+import { presentToast, handleError, presentLongToast } from '../../app-functions';
 
 @IonicPage()
 @Component({
@@ -14,6 +15,7 @@ export class SettingsPage {
 	settings:any;
 	bedieningTableID:any;
 	semi:any;
+	editPasswordMode:boolean = false;
 	constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public global: GlobalProvider, public http: Http) {
 		this.settings = new FormGroup({
 			table: new FormControl(),
@@ -40,7 +42,7 @@ export class SettingsPage {
 			},
 			(error) =>
 			{
-				alert("Error: " + error);
+				handleError(this.navCtrl,error,this.toastCtrl);
 			}
 		)
 	}
@@ -50,54 +52,59 @@ export class SettingsPage {
 		var jsonSend = {
 			id: this.global.myUsrID,
 			bedieningTableID: value.table,
-			semi: value.semi,
-			oldpassword: "",
-			newpassword: "",
+			semi: value.semi
 		}
 
-		if (value.newpassword != null || value.newpassword != "")
+		if (this.editPasswordMode && value.newpassword != null || value.newpassword != "")
 		{
 			if (value.newpassword != value.confirmpassword)
 			{
-				this.presentToast("Please ensure that your passwords match.");
-            	return false;
+				presentToast(this.toastCtrl,"Please ensure that your passwords match.");
+				return false;
 			}
-			jsonSend.oldpassword = value.oldpassword;
-			jsonSend.newpassword = value.newpassword;
-		}		
+		}
+	
 		this.http.post('/updateSettings', jsonSend).subscribe
 		(
-			(data) =>
-			{
-				var jsonResp = JSON.parse(data.text());
-				if (jsonResp.jsonRes.success)
+			() =>
+			{			
+				presentToast(this.toastCtrl,"Updated!");
+				if (this.editPasswordMode)
 				{
-					this.presentToast("Updated!");
-				}
-				else
-				{
-					this.presentToast("Old Password is incorrect. Please try again. Nothing is updated.");
-					return false;
+					let jsonSend =
+					{
+						id: this.global.myUsrID,
+						oldpassword: value.oldpassword,
+						newpassword: value.newpassword
+					};
+					
+					this.http.post('/updatePassword',jsonSend).subscribe
+					(
+						(data) =>
+						{
+							var jsonResp = JSON.parse(data.text());
+							if (jsonResp.jsonRes.success)
+							{
+								presentLongToast(this.toastCtrl,"Updated Password!");
+								this.editPasswordMode = false;
+							}
+							else
+							{
+								presentToast(this.toastCtrl,"Old Password is incorrect. Please try again.");
+								return false;
+							}
+						},
+						(error) =>
+						{
+							handleError(this.navCtrl,error,this.toastCtrl);
+						}
+					)
 				}
 			},
 			(error) =>
 			{
-				alert("Error: " + error);
+				handleError(this.navCtrl, error, this.toastCtrl);
 			}
 		)
 	}
-
-	presentToast(text){
-		let toast = this.toastCtrl.create(
-		  {
-			message: text,
-			duration: 1500,
-			position: 'bottom',
-			dismissOnPageChange: false
-		  }
-		);
-		toast.present();
-	  }
-	
-
 }
