@@ -47,3 +47,30 @@ export function handleError(navCtrl, error, toastCtrl)
     presentLongToast(toastCtrl, msg);
   }
 }
+
+export function getDayMonth(date)
+{
+  var firstSlash = false;
+  var result = "";
+  for (let index = 0; index < date.length; index++) {
+      var element = date.charAt(index);
+      if (!firstSlash && element != '/')
+      {
+          result += element;
+      }
+      else if (!firstSlash && element == '/')
+      {
+        firstSlash = true;
+        result += element;
+      }
+      else if (firstSlash && element != '/')
+      {
+        result += element;
+      }
+      else if (firstSlash && element == '/')
+      {
+        break;
+      }
+  }
+  return result;
+}

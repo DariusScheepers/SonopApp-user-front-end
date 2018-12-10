@@ -1,5 +1,5 @@
 export let CONFIG = {
-    url: "http://10.0.10.225:3000"
+    url: "http://localhost:3000"
 }
 // https://erpcoin.duckdns.org:80
 // http://localhost:8080
