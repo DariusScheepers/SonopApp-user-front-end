@@ -15,8 +15,22 @@ import { presentToast, handleError } from '../../app-functions';
 export class LoginPage {
 
   adminUser: any;
+  splashScreenReady: any = false;
+  splashScreenVisibility: any = "hidden";
+  splashScreenOn: any = true;
+  splashScreenOnLength: any = 4500;
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public http: Http, public global: GlobalProvider) {
     this.adminUser = new FormGroup({user: new FormControl(), pass: new FormControl()});
+  }
+
+
+  public splashScreenLoaded()
+  {
+    this.splashScreenReady = true;
+    this.splashScreenVisibility = "visible";
+    setTimeout(() => {
+      this.splashScreenOn = false;
+    }, this.splashScreenOnLength);
   }
 
   public login(value: any)
