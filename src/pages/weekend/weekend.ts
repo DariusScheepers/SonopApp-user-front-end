@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
 import { GlobalProvider } from "../../providers/global/global";
 import { Http } from '../../http-api';
-import { handleError } from '../../app-functions';
+import { handleError, presentLongToast } from '../../app-functions';
 
 @Component({
 	selector: 'page-weekend',
@@ -14,8 +14,7 @@ export class WeekendPage {
 	meals:any;
 	constructor(public navCtrl: NavController, public global: GlobalProvider, public http: Http, public toastCtrl: ToastController) {
 		this.checkIfWeekendOpen();
-		if (this.weekendSignInOpen)
-			this.loadSlotValues();
+		this.loadSlotValues();
 	}
 
 	public checkIfWeekendOpen()
@@ -35,6 +34,7 @@ export class WeekendPage {
 			(data) =>
 			{
 				var jsonResp = JSON.parse(data.text());
+				console.log('da', jsonResp.JSONRes);
 				this.meals = jsonResp.JSONRes;
 			},
 			(error) =>
@@ -46,25 +46,34 @@ export class WeekendPage {
 
 	public updateSlot(meal)
 	{
-		meal.status = !meal.status;
-
-		let reqSend = {
-			id: this.global.myUsrID,
-			wsiFridayDinner: this.meals[0].status,
-			wsiSaturdayBrunch: this.meals[1].status,
-			wsiSaturdayDinner: this.meals[2].status,
-			wsiSundayBreakfast: this.meals[3].status,
-			wsiSundayLunch: this.meals[4].status,
-			wsiSundayDinner: this.meals[5].status
+		console.log('wi: ',this.weekendSignInOpen);
+		if (!this.weekendSignInOpen) {
+			presentLongToast(this.toastCtrl, `Sign in for the weekend has closed`);
+			return;
 		}
-		this.http.post('/updateWeekend', reqSend).subscribe
-		(
-			(data) =>
-			{},
-			(error) =>
-			{
-				handleError(this.navCtrl, error, this.toastCtrl);
+		else 
+		{
+			console.log('fok');
+			meal.status = !meal.status;
+	
+			let reqSend = {
+				id: this.global.myUsrID,
+				wsiFridayDinner: this.meals[0].status,
+				wsiSaturdayBrunch: this.meals[1].status,
+				wsiSaturdayDinner: this.meals[2].status,
+				wsiSundayBreakfast: this.meals[3].status,
+				wsiSundayLunch: this.meals[4].status,
+				wsiSundayDinner: this.meals[5].status
 			}
-		)
+			this.http.post('/updateWeekend', reqSend).subscribe
+			(
+				(data) =>
+				{},
+				(error) =>
+				{
+					handleError(this.navCtrl, error, this.toastCtrl);
+				}
+			)			
+		}
 	}
 }

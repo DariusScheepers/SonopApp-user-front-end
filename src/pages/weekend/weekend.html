@@ -8,7 +8,10 @@
 </ion-header>
     
 <ion-content padding>
-    <div *ngIf="weekendSignInOpen">
+    <div *ngIf="!weekendSignInOpen">
+        <h1>Sign in for the weekend has closed</h1>
+    </div>
+    <div>
         <p>Weekend Sign In closes every Thursday at 15:00.</p>
         <ion-list>
             <ion-card color="primary" class="weekendSlots card" *ngFor="let meal of meals" (click)="updateSlot(meal)">
@@ -19,9 +22,6 @@
                 </ion-card-content>
             </ion-card>
         </ion-list>
-    </div>
-    <div *ngIf="!weekendSignInOpen">
-        <h1>Sign in for the weekend has closed</h1>
     </div>
 </ion-content>
       
