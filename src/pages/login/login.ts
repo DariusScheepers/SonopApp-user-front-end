@@ -14,13 +14,16 @@ import { presentToast, handleError } from '../../app-functions';
 })
 export class LoginPage {
 
-  adminUser: any;
+  user: any;
   splashScreenReady: any = false;
   splashScreenVisibility: any = "hidden";
   splashScreenOn: any = true;
   splashScreenOnLength: any = 4500;
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public http: Http, public global: GlobalProvider) {
-    this.adminUser = new FormGroup({user: new FormControl(), pass: new FormControl()});
+    this.user = new FormGroup({
+      studentNumber: new FormControl()
+      });
+      console.log('st:', this.user);
   }
 
 
@@ -36,11 +39,9 @@ export class LoginPage {
   public login(value: any)
   {
     var jsonArr = {
-      "username" : "",
-      "password" : ""
+      studentNumber : ""
     };
-    jsonArr.username = value.user;
-    jsonArr.password = value.pass;
+    jsonArr.studentNumber = value.studentNumber;
 
 	this.http.post("/login", jsonArr).subscribe
 	(
