@@ -23,7 +23,6 @@ export class LoginPage {
     this.user = new FormGroup({
       studentNumber: new FormControl()
       });
-      console.log('st:', this.user);
   }
 
 

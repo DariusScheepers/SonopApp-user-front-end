@@ -35,6 +35,10 @@
                 <ion-label>Semi</ion-label>
                 <ion-checkbox right formControlName="semi" [(ngModel)]="semi"></ion-checkbox>
 			</ion-item>
+			<ion-item>
+				<ion-label floating>Update email adress</ion-label>
+				<ion-input formControlName="email" type="text" maxlength="100" [(ngModel)]="emailAddress"></ion-input>
+			</ion-item>
 		</ion-list>
 		<button *ngIf="!editPasswordMode" ion-button outline round (click)="editPasswordMode = !editPasswordMode">Change Password</button>
 		<button *ngIf="editPasswordMode" ion-button outline round (click)="editPasswordMode = !editPasswordMode">Cancel Changing Password</button>

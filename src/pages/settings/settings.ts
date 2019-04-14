@@ -15,6 +15,7 @@ export class SettingsPage {
 	settings:any;
 	bedieningTableID:any;
 	semi:any;
+	emailAddress:any;
 	editPasswordMode:boolean = false;
 	constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public global: GlobalProvider, public http: Http) {
 		this.settings = new FormGroup({
@@ -22,7 +23,8 @@ export class SettingsPage {
 			semi: new FormControl(),
 			oldpassword: new FormControl(),
 			newpassword: new FormControl(),
-			confirmpassword: new FormControl()
+			confirmpassword: new FormControl(),
+			email: new FormControl()
 		})
 		this.loadCurrentTable();
 	}
@@ -39,6 +41,7 @@ export class SettingsPage {
 				var jsonResp = JSON.parse(data.text());
 				this.bedieningTableID = jsonResp.result0.tblBedieningTable_talID;
 				this.semi = jsonResp.result0.usrIsSemi;
+				this.emailAddress = jsonResp.result0.usrEmailAddress;	
 			},
 			(error) =>
 			{
@@ -52,7 +55,8 @@ export class SettingsPage {
 		var jsonSend = {
 			id: this.global.myUsrID,
 			bedieningTableID: value.table,
-			semi: value.semi
+			semi: value.semi,
+			email: value.email
 		}
 
 		if (this.editPasswordMode && value.newpassword != null || value.newpassword != "")
