@@ -30,7 +30,7 @@ export class RegisterPage {
 
     public registerUser(value: any)
     {
-        var regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (value.fname == null || value.fname == "")
         {
             presentToast(this.toastCtrl,"Please fill in your name.");
@@ -41,9 +41,19 @@ export class RegisterPage {
             presentToast(this.toastCtrl,"Please fill in your surname.");
             return false;
         }
-        else if (!regexEmail.test(value.email)) {
-            presentToast(this.toastCtrl,"Please enter a valid email address.");
+        else if (value.email == null || value.email == "") {
+            presentToast(this.toastCtrl, "Please enter a valid email address.");
             return false;
+        }
+        else if (!regexEmail.test(value.email)) {
+            const email = value.email as string;            
+            const trimmedEmail = email.slice(0, email.length - 1);
+            if (!regexEmail.test(trimmedEmail)) {
+                presentToast(this.toastCtrl, "Please enter a valid email address.");
+                return false;
+            } else {
+                value.email = trimmedEmail;
+            }
         }
         else if (value.username == null || value.username == "")
         {
@@ -78,6 +88,14 @@ export class RegisterPage {
         else if (value.password != value.confirmpassword)
         {
             presentToast(this.toastCtrl,"Please ensure that your passwords match.");
+            return false;
+        } else if (value.studentnumber.length < 8)
+        {
+            presentToast(this.toastCtrl, 'Student number is too short');
+            return false;
+        } else if (value.studentnumber.length > 8)
+        {
+            presentToast(this.toastCtrl, 'Student number is too long');
             return false;
         }
         else

@@ -37,6 +37,14 @@ export class LoginPage {
 
   public login(value: any)
   {
+    if (value.studentNumber.length < 8) {
+      presentToast(this.toastCtrl, 'Student number is too short');
+      return;
+    } else if (value.studentNumber.length > 8) {
+      presentToast(this.toastCtrl, 'Student number is too long');
+      return;
+    }
+
     var jsonArr = {
       studentNumber : ""
     };

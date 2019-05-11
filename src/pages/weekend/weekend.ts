@@ -46,14 +46,12 @@ export class WeekendPage {
 
 	public updateSlot(meal)
 	{
-		console.log('wi: ',this.weekendSignInOpen);
 		if (!this.weekendSignInOpen) {
 			presentLongToast(this.toastCtrl, `Sign in for the weekend has closed`);
 			return;
 		}
 		else 
 		{
-			console.log('fok');
 			meal.status = !meal.status;
 	
 			let reqSend = {
